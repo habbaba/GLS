@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <record id="gls_analysis_view_kanban" model="ir.ui.view">
+        <field name="name">gls.analysis.kanban</field>
+        <field name="model">gls.analysis</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban" create="0" group_create="false">
+                <field name="count_waiting_process" />
+                <field name="count_taken_process" />
+                <field name="count_done_process" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary">
+                                        <a type="object" name="get_stock_action">
+                                            <field name="name" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_primary_left">
+                                        <button class="btn btn-primary" name="get_action_stock_ready" type="object">
+                                            <span>
+                                                <t t-esc="record.count_waiting_process.value"/>
+                                                İşlenecek </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-6 o_kanban_primary_right">
+                                        <div t-if="record.count_taken_process.raw_value > 0" class="row">
+                                            <div class="col-12">
+                                                <a name="get_action_stock_taken" type="object">
+                                                    <field name="count_taken_process"/>
+ Numune
+                                                    Alındı </a>
+                                            </div>
+                                        </div>
+                                        <div t-if="record.count_done_process.raw_value > 0" class="row">
+                                            <div class="col-12">
+                                                <a name="get_action_stock_done" type="object">
+                                                    <field name="count_done_process"/>
+ Veri Girildi </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="view_gls_analysis_tree" model="ir.ui.view">
+        <field name="name">gls.analysis.tree</field>
+        <field name="model">gls.analysis</field>
+        <field name="priority" eval="10" />
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_gls_analysis_form" model="ir.ui.view">
+        <field name="name">gls.analysis.form</field>
+        <field name="model">gls.analysis</field>
+        <field name="priority" eval="10" />
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div>
+                        <group>
+
+                            <field name="name" string="Analiz ismi" />
+
+                        </group>
+                        <group>
+                            <field name="customer_share" />
+                            <field name="pallet_weight" />
+                            <field name="location_id" />
+                        </group>
+
+
+                    </div>
+
+                    <notebook>
+                        <page string="Ölçümler">
+                            <field name="analysis_line_ids">
+                                <tree editable="bottom">
+                                    <field name="feature" />
+                                    <field name="unit" />
+                                    <field name="method" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Alt Bilgi Notu">
+                            <group>
+                                <group>
+                                    <field name="responsible_id" />
+                                </group>
+
+                            </group>
+                            <div class="o_horizontal_separator mt-4 mb-3 text-uppercase fw-bolder small">Alt Bilgi Notu</div>
+                            <div class="col-lg-12">
+                                <field name="note" />
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="gls_analysis_action">
+        <field name="name">Analiz Şablonları</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gls.analysis</field>
+        <field name="view_mode">tree,form</field>
+
+    </record>
+
+    <record model="ir.actions.act_window" id="gls_analysis_kanban_action">
+        <field name="name">Analiz Ekranı</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gls.analysis</field>
+        <field name="view_mode">kanban</field>
+
+    </record>
+
+
+</odoo>

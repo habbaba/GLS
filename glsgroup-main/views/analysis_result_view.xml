@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="analysis_result_view_tree" model="ir.ui.view">
+        <field name="name">analysis.result.view.tree</field>
+        <field name="model">analysis.result</field>
+        <field name="arch" type="xml">
+            <tree string="" create="false" delete="false" edit="false">
+                <field name="analysis_id" />
+                <field name="product_id" />
+                <field name="lot_number" />
+                <field name="partner_id" />
+                <field name="create_date" />
+                <field name="create_uid" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="analysis_result_view_search" model="ir.ui.view">
+        <field name="name">analysis.result.view.search</field>
+        <field name="model">analysis.result</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="analysis_id" />
+                <field name="product_id" />
+                <field name="lot_number" />
+                <field name="partner_id" />
+            </search>
+            <filter string="Analiz" name="filter_analysis_id" context="{'group_by': 'analysis_id'}" />
+            <filter string="Ürün" name="filter_product_id" context="{'group_by': 'product_id'}" />
+            <filter string="Lot Numarası" name="filter_lot_number" context="{'group_by': 'lot_number'}" />
+            <filter string="Tedarikçi" name="filter_partner_id" context="{'group_by': 'partner_id'}" />
+            <filter string="Oluşturan" name="filter_create_uid" context="{'group_by': 'create_uid'}" />
+            <!-- <separator orientation="vertical" /> -->
+            <filter string="Numune Kabul Tarihi" name="accept_date" context="{'group_by':'accept_date'}"/>
+            <filter string="Oluşturulma Tarihi" name="create_date" context="{'group_by':'create_date'}"/>
+        </field>
+    </record>
+
+
+    <record id="analysis_result_view_form" model="ir.ui.view">
+        <field name="name">analysis.result.view.form</field>
+        <field name="model">analysis.result</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="send_by_email_with_attachment" type="object" string="Send by Email" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group >
+                            <field name="analysis_id" />
+                            <field name="product_id" />
+                        </group>
+                        <group >
+                            <field name="lot_number" />
+                            <field name="partner_id" />
+                            <field name="create_date" />
+                            <field name="create_uid" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="results" string="Sonuçlar">
+                            <field name="result_line_ids">
+                                <tree string="Sonuçlar">
+                                    <field name="feature" />
+                                    <field name="unit"/>
+                                    <field name="method"/>
+                                    <field name="reference_range"/>
+                                    <field name="result"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+
+
+
+    <record id="gls_analysis_result_action" model="ir.actions.act_window">
+        <field name="name">Analiz Sonuçları</field>
+        <field name="res_model">analysis.result</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="analysis_result_view_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+               Henüz bir kayıt bulunmamaktadır.
+            </p>
+        </field>
+    </record>
+
+</odoo>
+
