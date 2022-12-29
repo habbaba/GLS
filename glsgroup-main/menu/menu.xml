@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <menuitem id="menu_gls_root" name="GLS" sequence="100" />
+    <menuitem id="menu_gls_root" name="GLS-Kalite Kontrol" sequence="100" web_icon="glsgroup-main,static/description/icon.png"/>
 
     <menuitem id="menu_analysis" name="Kalite Kontrol" parent="menu_gls_root" sequence="10" />
 

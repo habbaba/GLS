@@ -23,7 +23,7 @@ class Stock(models.Model):
     @api.depends('stock_move_id')
     def _compute_lot_number(self):
         for rec in self:
-            stock_move_line = self.env['stock.move.line'].search([('move_id', '=', rec.stock_move_id.id), ('product_id', '=', rec.product_id.id)])
+            stock_move_line = self.env['stock.move.line'].search([('move_id', '=', rec.stock_move_id.id), ('product_id', '=', rec.product_id.id)], limit=1)
             rec.lot_number = stock_move_line.lot_name
 
 
