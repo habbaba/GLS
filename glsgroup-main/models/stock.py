@@ -1,6 +1,5 @@
-from odoo import models, fields, api, tools, _
-from psycopg2 import sql
-from datetime import datetime
+from odoo import models, fields, api
+
 
 
 class Stock(models.Model):
@@ -41,7 +40,7 @@ class Stock(models.Model):
         action['context'] = self.env.context.copy()
         action['context'].update({
             'default_analysis_id': self.analysis_id.id,
-            'default_product_id': self.product_id.id    
+            'default_product_id': self.product_id.id,    
         })
         return action
         

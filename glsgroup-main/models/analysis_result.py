@@ -21,7 +21,7 @@ class AnalysisResult(models.Model):
 
     def compute_name(self):
         for rec in self:
-            rec.name = rec.analysis_id.name+"/"+rec.product_id.display_name+"/"+rec.lot_number
+            rec.name = rec.analysis_id.name+"/"+rec.product_id.display_name+"/"+ rec.lot_number if rec.lot_number else ""
 
     def _get_report_base_filename(self):
         self.ensure_one()

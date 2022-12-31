@@ -62,7 +62,7 @@
                     <notebook>
                         <page name="results" string="Sonuçlar">
                             <field name="result_line_ids">
-                                <tree string="Sonuçlar">
+                                <tree string="Sonuçlar" create="false" delete="false" edit="false">
                                     <field name="feature" />
                                     <field name="unit"/>
                                     <field name="method"/>

@@ -38,7 +38,7 @@
                                     <strong class="text-muted">Distrubutor</strong>
                                     <br/>
                                     <div class="rectangle">
-                                        <span t-field="o.partner_id.display_name"/>
+                                        <span>Bahceturk</span>
                                     </div>
                                 </div>
                                 <div class="col-auto col-3 mw-100 mb-2">
@@ -58,7 +58,7 @@
                                     <strong class="text-muted">Product Name</strong>
                                     <br/>
                                     <div class="rectangle">
-                                        <span t-field="o.product_id.display_name"/>
+                                        <span t-field="o.product_id.product_tmpl_id.name"/>
                                     </div>
                                 </div>
                                 <div class="col-auto col-3 mw-100 mb-2">
