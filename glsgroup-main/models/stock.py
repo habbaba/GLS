@@ -35,13 +35,11 @@ class Stock(models.Model):
         self.write({'state': 'skipped'})
 
     def action_set_data(self):
-       
         action = self.env['ir.actions.act_window']._for_xml_id('glsgroup-main.action_set_data_table')
-        action['context'] = self.env.context.copy()
-        action['context'].update({
+        action['context']={
             'default_analysis_id': self.analysis_id.id,
             'default_product_id': self.product_id.id,    
-        })
+        }
         return action
         
 

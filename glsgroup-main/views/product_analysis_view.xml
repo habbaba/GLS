@@ -7,7 +7,7 @@
         <field name="name">gls.product.analysis.item.tree</field>
         <field name="model">gls.product.analysis.item</field>
         <field name="arch" type="xml">
-            <tree string="" editable="bottom">
+            <tree string="" editable="bottom" sample="1">
                 <field name="analysis_id" />
                 <field name="analysis_line_id" />
                 <field name="value" />
@@ -17,7 +17,7 @@
     </record>
 
     <record id="gls_product_analysis_item_action" model="ir.actions.act_window">
-        <field name="name">Items</field>
+        <field name="name">Referans Aralığı</field>
         <field name="res_model">gls.product.analysis.item</field>
         <field name="view_mode">tree</field>
         <field name="domain">[]</field>

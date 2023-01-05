@@ -4,6 +4,7 @@ from odoo import api, fields, models, _
 
 class Analysis(models.Model): 
     _name = "gls.analysis"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     
 
     name=fields.Char(string="Analiz Adı")
