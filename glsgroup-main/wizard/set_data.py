@@ -37,7 +37,6 @@ class AnalysisConfTable(models.Model):
                                   'reference_range': second.value,
                                   'result': first.result}) for first, second in zip(self.result_ids, result_line_ids)]
         })
-        print("analysis result:", analysis_result_vals)
         record = self.env['analysis.result'].create(analysis_result_vals)
         if record:
             product_move_id.state = 'done'
@@ -51,9 +50,6 @@ class AnalysisConfTable(models.Model):
         ctx = self.env.context
         active_model = ctx.get('active_model')
         active_id = ctx.get('active_id')
-        print("ctx", ctx)
-        print("active_model", active_model)
-        print("active_id", active_id)
         product_move_id = self.env[active_model].browse(active_id)
         vals = {
             'analysis_id': product_move_id.analysis_id.id,

@@ -16,12 +16,30 @@
         </field>
     </record>
 
+
+    <record id="gls_product_analysis_item_view_tree_search" model="ir.ui.view">
+        <field name="name">gls.product.analysis.item.search</field>
+        <field name="model">gls.product.analysis.item</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="analysis_id" />
+                <field name="analysis_line_id" />
+                <field name="value" />
+                <field name="product_id" />
+                <filter name="filter_analysis_id" string="Analiz"  context="{'group_by': 'analysis_id'}" />
+                <filter name="filter_product_id" string="Ürün"  context="{'group_by': 'product_id'}" />
+                <filter name="filter_analysis_line_id" string="Özellik"  context="{'group_by': 'analysis_line_id'}" />
+            </search>
+        </field>
+    </record>
+
     <record id="gls_product_analysis_item_action" model="ir.actions.act_window">
         <field name="name">Referans Aralığı</field>
         <field name="res_model">gls.product.analysis.item</field>
         <field name="view_mode">tree</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
+        <field name="search_view_id" ref="gls_product_analysis_item_view_tree_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a new account

@@ -8,9 +8,7 @@ class StockMove(models.Model):
     @api.model_create_multi
     def create(self, vals):
         res = super().create(vals)
-
         for rec in res:
-            print("res:", rec)
             analysis_ids = res.product_id.product_tmpl_id.analysis_ids.mapped('analysis_id')
             for analysis in analysis_ids:
                 if analysis.location_id.id == rec.location_dest_id.id:
@@ -25,3 +23,16 @@ class StockMove(models.Model):
 
 
 
+
+
+
+class Picking(models.Model):
+    _inherit = "stock.picking"
+
+
+
+
+    def button_validate(self):
+        res = super().button_validate()
+        print("self:", self)
+        print("self:", self.move_ids_without_package)
