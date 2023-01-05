@@ -14,9 +14,9 @@
                 <field name="product_id" />
                 <field name="partner_id" />
                 <field name="accept_date" />
-                <field name="location_dest_id" />
+                <field name="location_dest_id" string="Lokasyon"/>
                 <field name="analysis_id" />
-                <field name="state" />
+                <field name="state" string="Durum"/>
                 <button name="action_do_analysis" type="object" string="Analiz Yap" class="btn btn-success" icon="fa-pencil" attrs="{'invisible': [('state','not in',('waiting'))]}"/>
                 <button name="action_dont_analysis" type="object" string="Analiz Yapma" class="btn btn-warning" icon="fa-pencil" attrs="{'invisible': [('state','not in',('waiting'))]}"/>
                 <button name="action_set_data" type="object" string="Veri Gir" class="btn btn-info" icon="fa-pencil" attrs="{'invisible': [('state','not in',('taken'))]}"/>
@@ -37,8 +37,14 @@
                 <field name="product_id"/>
                 <field name="partner_id"/>
                 <field name="location_dest_id"/>
-
-
+                <filter name="filter_analysis_id" string="Analiz"  context="{'group_by': 'analysis_id'}" />
+                <filter name="filter_state" string="Durum"  context="{'group_by': 'state'}" />
+                <!-- <filter name="filter_ref_number" string="Referans Numarası"  context="{'group_by': 'ref_number'}" />
+                <filter name="filter_source_document" string="Kaynak Belge"  context="{'group_by': 'source_document'}" />
+                <filter name="filter_lot_number" string="Lot Numarası"  context="{'group_by': 'lot_number'}" />
+                <filter name="filter_product_id" string="Ürün"  context="{'group_by': 'product_id'}" />
+                <filter name="filter_partner_id" string="Tedarikçi"  context="{'group_by': 'partner_id'}" />
+                <filter name="filter_location_dest_id" string="Lokasyon"  context="{'group_by': 'location_dest_id'}" /> -->
             </search>
         </field>
     </record>
