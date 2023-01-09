@@ -29,12 +29,12 @@ class Picking(models.Model):
         for move in self.move_ids_without_package:
             analysis_ids = move.product_id.product_tmpl_id.analysis_ids.mapped('analysis_id')
             for analysis in analysis_ids:
-                if analysis.location_id.id == move.location_dest_id.id:
+                already_existing_records = self.env['gls.stock'].search([('stock_move_id', '=', move.id),('analysis_id', '=', analysis.id)])
+                if analysis.location_id.id == move.location_dest_id.id and not already_existing_records:
                     self.env['gls.stock'].create({
                         'stock_move_id': move.id,
                         'analysis_id': analysis.id,
                         'state': 'waiting'
-
                     })
         return res
 
