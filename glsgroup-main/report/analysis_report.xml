@@ -21,12 +21,12 @@
 
                     </style>
                     <div class="page">
-                        <p style="text-align:center">
+                        <p style="text-align:center; margin:0;padding:0;">
                             <span>
-                                <strong style="font-size:16px">Analiz Sertifikası</strong>
+                                <strong style="font-size:28px">Analiz Sertifikası</strong>
                             </span>
                         </p>
-                        <p style="text-align:center">Certificate of Analysis</p>
+                        <p class="text-muted" style="text-align:center; font-size:28px;">Certificate of Analysis</p>
                         <br/>
                         <br/>
                         <div class="mb-4">
@@ -78,7 +78,7 @@
                                     <strong class="text-muted">Production Date</strong>
                                     <br/>
                                     <div class="rectangle">
-                                        <span t-field="o.create_date" />
+                                        <span t-esc="o._get_lot_id_create_date()" />
                                     </div>
                                 </div>
                                 <div class="col-auto col-3 mw-100 mb-2">
@@ -150,14 +150,15 @@
                             <t t-esc="o.analysis_id.note"/>
                         </div>
                         <div class="row" >
-                            <div  class="col-9" style="text-align: right; ">
+                            
+                            <div class="col-3" style="text-align: right;">
+
+                            </div>
+                            <div  class="col-9" style="text-align: right;">
                                 <strong>Analiz Sorumlusu</strong>
                                     <br/>
                                 <strong class="text-muted" t-field = "o.analysis_id.responsible_id.display_name"></strong>
                                  <br/>
-                            </div>
-                            <div class="col-3">
-
                             </div>
 
                         </div>

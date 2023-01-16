@@ -7,7 +7,7 @@ class Stock(models.Model):
 
     ref_number = fields.Char(related='stock_move_id.picking_id.name',string='Referans')
     location_dest_id = fields.Many2one('stock.location', related='stock_move_id.location_dest_id', string='Location')
-    partner_id = fields.Many2one('res.partner',related='stock_move_id.picking_id.partner_id', string='Tedarikçi')
+    partner_id = fields.Many2one('res.partner',compute='_compute_partner_id', string='Tedarikçi')
     product_id = fields.Many2one('product.product', related='stock_move_id.product_id', string='Ürün')
     source_document = fields.Char(related='stock_move_id.picking_id.origin', string='Kaynak Belge')
     state = fields.Selection(
@@ -25,7 +25,16 @@ class Stock(models.Model):
         for rec in self:
             stock_move_line = self.env['stock.move.line'].search([('move_id', '=', rec.stock_move_id.id), ('product_id', '=', rec.product_id.id)], limit=1)
             rec.lot_id = stock_move_line.lot_id
+    
 
+    @api.depends('stock_move_id')
+    def _compute_partner_id(self):
+        for rec in self:
+            print("çalıştı")
+            picking_ids = self.env['stock.move.line'].search([('lot_id', '=', rec.lot_id.id)]).mapped('picking_id')
+            print("picking_ids:",picking_ids )
+            print("picking:", picking_ids.filtered(lambda picking: picking.partner_id))
+            rec.partner_id = picking_ids.filtered(lambda picking: picking.partner_id)[0].partner_id.id
 
     def action_do_analysis(self):
         action = self.env['ir.actions.act_window']._for_xml_id('glsgroup-main.action_get_date')

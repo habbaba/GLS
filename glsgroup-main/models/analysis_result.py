@@ -1,4 +1,5 @@
 from odoo import models, fields, api,_
+import pytz
 
 
 class AnalysisResult(models.Model):
@@ -26,6 +27,16 @@ class AnalysisResult(models.Model):
     def _get_report_base_filename(self):
         self.ensure_one()
         return 'Analiz Raporu-%s' % (self.name)
+
+    
+    def _get_lot_id_create_date(self):
+        custom_stock = self.env['gls.stock'].search([('analysis_result_id', '=', self.id)])
+        time = None
+        if custom_stock:
+            user = self.env['res.users'].browse(self.env.uid)
+            tz = pytz.timezone(user.tz)
+            time = (pytz.utc.localize(custom_stock.lot_id.create_date).astimezone(tz)).strftime("%m/%d/%Y %H:%M:%S")
+        return time
 
     def send_by_email_with_attachment(self):
         self.ensure_one()
