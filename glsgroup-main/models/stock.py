@@ -30,11 +30,15 @@ class Stock(models.Model):
     @api.depends('stock_move_id')
     def _compute_partner_id(self):
         for rec in self:
-            print("çalıştı")
             picking_ids = self.env['stock.move.line'].search([('lot_id', '=', rec.lot_id.id)]).mapped('picking_id')
-            print("picking_ids:",picking_ids )
-            print("picking:", picking_ids.filtered(lambda picking: picking.partner_id))
-            rec.partner_id = picking_ids.filtered(lambda picking: picking.partner_id)[0].partner_id.id
+            if picking_ids:
+                filtered_ids =  picking_ids.filtered(lambda picking: picking.partner_id)
+                if filtered_ids:
+                    rec.partner_id = filtered_ids[0].partner_id.id
+                else:
+                    rec.partner_id = False
+            else:
+                rec.partner_id = False
 
     def action_do_analysis(self):
         action = self.env['ir.actions.act_window']._for_xml_id('glsgroup-main.action_get_date')
