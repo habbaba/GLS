@@ -2,6 +2,23 @@
 <odoo>
 
     <data noupdate="1">
+
+        <record id="paperformat_gls_product_label" model="report.paperformat">
+            <field name="name">Paperformat GLS product label</field>
+            <field name="default" eval="True" />
+            <field name="format">custom</field>
+            <field name="page_height">120</field>
+            <field name="page_width">100</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10.00</field>
+            <field name="margin_bottom">10.00</field>
+            <field name="margin_left">10.00</field>
+            <field name="margin_right">10.00</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">125</field>
+        </record>
+
         <record id="analysis_result_report" model="ir.actions.report">
             <field name="name">Analiz Raporu</field>
             <field name="model">analysis.result</field>
@@ -11,6 +28,18 @@
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="binding_model_id" ref="model_analysis_result"/>
             <field name="binding_type">report</field>
+        </record>
+
+        <record id="dynamic_product_label" model="ir.actions.report">
+            <field name="name">Dinamik Ürün Etiketi</field>
+            <field name="model">analysis.result</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">glsgroup-main.product_label</field>
+            <field name="report_file">glsgroup-main.product_label</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_analysis_result"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="dynamic_product_label"/>
         </record>
     </data>
 

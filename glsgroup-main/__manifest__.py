@@ -20,6 +20,7 @@
         'wizard/set_data.xml',
         'views/analysis_result_view.xml',
         'report/analysis_report.xml',
+        'report/product_label.xml',
         'report/report.xml',
         'data/mail_template.xml',
         'menu/menu.xml',

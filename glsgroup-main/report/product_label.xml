@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="product_label">
+
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+
+
+                    <style>
+                        div {
+                          text-align: center;
+                        }
+                    </style>
+                    <div class="page">
+                        <p style="font-size:32px;  margin:0; padding:0" >
+                            <strong >
+                                <t t-esc="o.product_id.product_tmpl_id.name"/>
+                            </strong>
+                        </p>
+                        <p style="font-size:20px;">
+                            <t t-esc="o.product_id.default_code"/>
+                        </p>
+                        <div>
+                            <img t-att-src="'/report/barcode/QR/%s' % o.name" style="width:250px;height:250px"/>
+                        </div>
+                        <p style="font-size:24px; margin-top: 5px;">
+                            <t t-esc="o.lot_number"/>
+                        </p>
+                        <p style="font-size:16px;">
+                            Satın aldığınız ürüne ait analiz raporuna üstteki
+                            karekodu okutarak veya
+                            www.glsgrup.com.tr/analizsonuclari
+                            adresinden ulaşabilirsiniz
+                        </p>
+
+                        <div t-field="o.name" t-options="{'widget': 'barcode', 'quiet':0, 'symbology': 'Code128','width': 600, 'height': 240, 'img_style': 'max-height:80pt;max-width:100%;', 'img_align': 'center'}"/>
+
+
+
+
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

@@ -38,6 +38,8 @@ class AnalysisResult(models.Model):
             time = (pytz.utc.localize(custom_stock.lot_id.create_date).astimezone(tz)).strftime("%m/%d/%Y %H:%M:%S")
         return time
 
+    
+
     def send_by_email_with_attachment(self):
         self.ensure_one()
         ir_model_data = self.env['ir.model.data']
