@@ -31,15 +31,15 @@
         </record>
 
         <record id="dynamic_product_label" model="ir.actions.report">
-            <field name="name">Ürün Etiketi</field>
-            <field name="model">stock.picking</field>
+            <field name="name">Dinamik Ürün Etiketi</field>
+            <field name="model">analysis.result</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">glsgroup-main.product_label</field>
             <field name="report_file">glsgroup-main.product_label</field>
-            <field name="print_report_name">'Ürün Etiketi - %s' % (object.name)</field>
-            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_analysis_result"/>
             <field name="binding_type">report</field>
-            <field name="paperformat_id" ref="paperformat_gls_product_label"/>
+            <field name="paperformat_id" ref="dynamic_product_label"/>
         </record>
     </data>
 
