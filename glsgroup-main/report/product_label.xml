@@ -22,14 +22,14 @@
                                     <t t-esc="o.product_id.product_tmpl_id.name"/>
                                 </strong>
                             </p>
-                            <p style="font-size:24px;">
+                            <p style="font-size:24px; margin-bottom: 10px;">
                                 <t t-esc="o.product_id.default_code"/>
                             </p>
                             <div>
                                 <t t-set="path" t-value="'www.glsgrup.com.tr/analizsonuclari'"/>
                                 <img t-att-src="'/report/barcode/QR/%s' % path" style="width:200px;height:200px"/>
                             </div>
-                            <p style="font-size:24px; margin:10px 6px 0px 0px;"><u><strong >Parti No.</strong></u></p>
+                            <p style="font-size:24px; margin:10px 6px 0px 0px;"><u><strong >Parti No:</strong></u></p>
                             <p style="font-size:20px; margin-bottom: 10px;">
                                 <t t-esc="o.lot_id.name or o.lot_name"/>
                             </p>
