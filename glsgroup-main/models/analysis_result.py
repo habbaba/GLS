@@ -86,3 +86,7 @@ class AnalysisResultLine(models.Model):
     reference_range = fields.Char(string="Referans Aralığı")
     result = fields.Char(string="Sonuç")
     analysis_result_id = fields.Many2one('analysis.result')
+    analysis_id = fields.Many2one('gls.analysis', 'Analiz', related='analysis_result_id.analysis_id', store=True)
+    product_id = fields.Many2one('product.product', 'Ürün', related='analysis_result_id.product_id', store=True)
+    lot_number = fields.Char(string='Lot Numarası',related='analysis_result_id.lot_number', store=True)
+    partner_id = fields.Many2one('res.partner', string='Tedarikçi',related='analysis_result_id.partner_id', store=True)
