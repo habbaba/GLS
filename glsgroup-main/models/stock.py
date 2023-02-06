@@ -32,13 +32,15 @@ class Stock(models.Model):
         for rec in self:
             picking_ids = self.env['stock.move.line'].search([('lot_id', '=', rec.lot_id.id)]).mapped('picking_id')
             if picking_ids:
-                filtered_ids =  picking_ids.filtered(lambda picking: picking.partner_id)
+                filtered_ids =  picking_ids.filtered(lambda picking: picking.partner_id and picking.origin == rec.source_document)
                 if filtered_ids:
                     rec.partner_id = filtered_ids[0].partner_id.id
                 else:
                     rec.partner_id = False
             else:
                 rec.partner_id = False
+
+
 
     def action_do_analysis(self):
         action = self.env['ir.actions.act_window']._for_xml_id('glsgroup-main.action_get_date')
