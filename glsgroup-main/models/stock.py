@@ -4,7 +4,9 @@ from odoo import models, fields, api
 
 class Stock(models.Model):
     _name = "gls.stock"
+    _rec_name = "name"
 
+    name = fields.Char(compute = "_get_name")
     ref_number = fields.Char(related='stock_move_id.picking_id.name',string='Referans')
     location_dest_id = fields.Many2one('stock.location', related='stock_move_id.location_dest_id', string='Location')
     partner_id = fields.Many2one('res.partner',compute='_compute_partner_id', string='Tedarikçi')
@@ -19,6 +21,11 @@ class Stock(models.Model):
     lot_id = fields.Many2one('stock.production.lot', compute="_compute_lot_id")
     lot_number = fields.Char(string='Lot Numarası',related='lot_id.name')
 
+
+
+    def _get_name(self):
+        for rec in self:
+            rec.name = rec.lot_number + '/' + rec.analysis_id.name
 
     @api.depends('stock_move_id')
     def _compute_lot_id(self):

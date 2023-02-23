@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="weight_measurement_view_tree" model="ir.ui.view">
+        <field name="name">weight.measurement.view.tree</field>
+        <field name="model">weight.measurement</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="gls_stock_id" />
+                <field name="partner_id" />
+                <field name="product_id" />
+                <field name="product_qty" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="weight_measurement_view_form" model="ir.ui.view">
+        <field name="name">weight.measurement.view.form</field>
+        <field name="model">weight.measurement</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="gls_stock_id" />
+                            <field name="partner_id" />
+                            <field name="product_id" />
+                            <field name="product_qty" />
+                        </group>
+                        <group>
+                            <button string="Palet Satırları Oluştur" name="action_create_pallet_lines" type="object" class="oe_highlight"/>
+                            
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="pallet_weight" string="Palet Ağırlıkları">
+                            <field name="line_ids">
+                                <tree string="" create="false" editable="bottom">
+                                    <field name="name" />
+                                    <field name="value" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="weight_measurement_action" model="ir.actions.act_window">
+        <field name="name">Palet Ağırlık Ölçümü</field>
+        <field name="res_model">weight.measurement</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+               Henüz bir kayıt bulunmamaktadır.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -11,6 +11,10 @@ access_accept_example,access.accept.example,model_accept_example,base.group_user
 access_gls_set_data_table_wizard,access.gls.set.data.table.wizard,model_gls_set_data_table_wizard,base.group_user,1,1,1,1
 access_analysis_result,access.analysis.result,model_analysis_result,base.group_user,1,1,1,1
 access_analysis_result_line,access.analysis.result.line,model_analysis_result_line,base.group_user,1,1,1,1
+access_weight_measurement,access.weight.measurement,model_weight_measurement,base.group_user,1,1,1,1
+access_weight_measurement_line,access.weight.measurement.line,model_weight_measurement_line,base.group_user,1,1,1,1
+
+
 
 
 

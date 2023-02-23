@@ -15,6 +15,7 @@
         'views/product_inherit_view.xml',
         'views/product_analysis_view.xml',
         'views/stock_view.xml',
+        'views/weight_measurement_view.xml',
         'wizard/configurator.xml',
         'wizard/get_date_view.xml',           
         'wizard/set_data.xml',

@@ -9,6 +9,7 @@
     <menuitem id="menu_analysis_stock" name="Ürün Hareketleri" parent="menu_gls_root" action="gls_stock_action" sequence="20" />
     <menuitem id="menu_analysis_result" name="Analiz Sonuçları" parent="menu_gls_root" action="gls_analysis_result_action" sequence="20" />
     <menuitem id="menu_analysis_result_line" name="Analiz Detayları" parent="menu_analysis" action="gls_analysis_result_line_action" sequence="30" />
+    <menuitem id="menu_weight_measurement" name="Palet Ağırlık Ölçümü" parent="menu_analysis" action="weight_measurement_action" sequence="40" />
 
 
     
