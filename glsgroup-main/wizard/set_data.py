@@ -12,6 +12,8 @@ class AnalysisConfTable(models.Model):
         res = super().default_get(fields_list)
         analysis_id = self.env.context.get('default_analysis_id')
         product_id = self.env['product.product'].browse(self.env.context.get('default_product_id'))
+        pallet_weight = self.env['gls.analysis'].browse(self.env.context.get('default_analysis_id')).pallet_weight
+
 
         result_line_ids = self.env['gls.product.analysis.item'].search(
             [('product_id', '=', product_id.product_tmpl_id.id), ('analysis_id', '=', analysis_id)])
@@ -23,6 +25,19 @@ class AnalysisConfTable(models.Model):
         res.update({
             'result_ids': [(0, 0, {'analysis_id': record.analysis_id.id, 'product_id': product_id.id, 'analysis_line_id': record.analysis_line_id.id, 'value': record.value}) for record in result_line_ids]
         })
+
+        if pallet_weight:
+            gross_weight_line_id = self.env['gls.analysis.line'].search([('analysis_id', '=', analysis_id), ('feature', 'ilike', '%brüt%')])
+            net_weight_line_id = self.env['gls.analysis.line'].search([('analysis_id', '=', analysis_id), ('feature', 'ilike', '%net%')])
+            gls_stock_id = self.env.context.get('gls_stock_id')
+            weight_measurement_id = self.env['weight.measurement'].search([('gls_stock_id', '=', gls_stock_id)], limit=1)
+            if weight_measurement_id:
+                for item in res['result_ids']:
+                    if item[2]['analysis_line_id'] == gross_weight_line_id.id:
+                        item[2]['result']=weight_measurement_id.gross_weight
+                    if item[2]['analysis_line_id'] == net_weight_line_id.id:
+                        item[2]['result']=weight_measurement_id.net_weight
+
         return res
 
     def save_data_analysis(self):

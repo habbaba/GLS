@@ -28,7 +28,7 @@
                             <field name="product_qty" />
                         </group>
                         <group>
-                            <button string="Palet Satırları Oluştur" name="action_create_pallet_lines" type="object" class="oe_highlight"/>
+                            <button string="Palet Satırları Oluştur" name="action_create_pallet_lines" type="object" class="oe_highlight" attrs="{'invisible': [('line_ids', '!=', [])]}"/>
                             
                         </group>
                     </group>

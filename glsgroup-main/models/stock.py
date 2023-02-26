@@ -62,6 +62,7 @@ class Stock(models.Model):
         action['context']={
             'default_analysis_id': self.analysis_id.id,
             'default_product_id': self.product_id.id,    
+            'gls_stock_id': self.id,    
         }
         return action
         
