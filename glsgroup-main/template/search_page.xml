@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="glsgroup-main.search_page" model="website.page">
+        <field name="name">Analiz Sonuçları</field>
+        <field name="type">qweb</field>
+        <field name="url">/analizsonuclari</field>
+        <field name="is_published">True</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="key">glsgroup-main.search_page</field>
+        <field name="arch" type="xml">
+            <t name="Analysis Result" t-name="glsgroup-main.search_page">
+                <t t-call="website.layout">
+                    <div id="wrap" class="oe_structure oe_empty">
+                        <div class="container mt-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" name="search" t-att-value="search" placeholder="Sonuç ara" aria-describedby="submit-button"/>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-primary" type="submit" id="submit-button">Ara</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <br/>
+                                    <br/>
+                                    <t t-if="error">
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>
+                                                <t t-esc="search"/>
+                                            </strong> lot numarasına ait analiz sonucu bulunamadı.
+                                        </div>
+                                    </t>
+
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </t>
+
+
+
+            </t>
+
+
+
+
+
+
+        </field>
+    </record>
+
+
+    <record id="menu_analysis_result" model="website.menu">
+        <field name="name">Analiz Sonuçları</field>
+        <field name="url">/analizsonuclari</field>
+        <field name="page_id" ref="glsgroup-main.search_page"/>
+        <field name="parent_id" ref="website.main_menu"/>
+    </record>
+
+</odoo>
