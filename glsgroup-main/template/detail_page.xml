@@ -8,6 +8,9 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="container">
+                            <img border="0" t-att-src="image_data_uri(res_company.logo)" style="height:auto;max-width:200px;max-height:48px;" />
+                            <hr/>
+                            <br/>
                             <p style="text-align:center; margin:0;padding:0;">
                                 <span>
                                     <strong style="font-size:28px">Analiz Sertifikası</strong>

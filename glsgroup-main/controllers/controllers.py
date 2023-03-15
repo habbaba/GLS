@@ -8,13 +8,13 @@ class Glsgroup(http.Controller):
         context = {}
         if request.httprequest.method == 'POST':
             lot_number = kw.get('search', False)
-            record = None
+            records = None
             if lot_number:
-                record = request.env['analysis.result'].with_user(SUPERUSER_ID).search([('lot_number', 'ilike', lot_number)], limit=1)
+                records = request.env['analysis.result'].with_user(SUPERUSER_ID).search([('lot_number', 'ilike', lot_number),('analysis_id.customer_share', '=', True)])
             else:
                 return request.redirect('/analizsonuclari')
-            if record:
-                return request.redirect('/analizsonuclari/rapor?lot=%s' % (record.lot_number))
+            if records:
+                return request.redirect('/analizsonuclari/rapor?lot=%s' % (records[0].lot_number))
             else:
                 context.update({
                     'search': kw.get('search', False),
@@ -28,7 +28,7 @@ class Glsgroup(http.Controller):
     @http.route('/analizsonuclari/rapor', auth='public')
     def detail(self, **kw):
         lot_number = kw.get('lot', False)
-        record = request.env['analysis.result'].with_user(SUPERUSER_ID).search([('lot_number', 'ilike', lot_number)], limit=1)
+        record = request.env['analysis.result'].with_user(SUPERUSER_ID).search([('lot_number', 'ilike', lot_number),('analysis_id.customer_share', '=', True)], limit=1)
         if lot_number and record:
             context = {
                 'record': record
@@ -40,13 +40,13 @@ class Glsgroup(http.Controller):
 
     @http.route('/file/download', auth='public')
     def download(self, **kw):
-        record = None
+        records = None
         lot_number = kw.get('lot', False)
         if lot_number:
-            record = request.env['analysis.result'].with_user(SUPERUSER_ID).search([('lot_number', 'ilike', lot_number)], limit=1)
-        if record:
-            pdf = request.env.ref('glsgroup-main.analysis_result_report').with_user(SUPERUSER_ID)._render_qweb_pdf(res_ids=record.id)[0]
-            report_content_disposition = content_disposition(f'{record.name}.pdf')
+            records = request.env['analysis.result'].with_user(SUPERUSER_ID).search([('lot_number', 'ilike', lot_number),('analysis_id.customer_share', '=', True)])
+        if records:
+            pdf = request.env.ref('glsgroup-main.analysis_result_report').with_user(SUPERUSER_ID)._render_qweb_pdf(res_ids=records.ids)[0]
+            report_content_disposition = content_disposition(f'{records[0].product_id.display_name}-analiz-sonucu.pdf')
             pdfhttpheaders = [
                 ('Content-Type', 'application/pdf'),
                 ('Content-Length', len(pdf)),
