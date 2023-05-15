@@ -24,7 +24,8 @@ class WeightMeasurement(models.Model):
         ]
 
     gls_stock_id = fields.Many2one('gls.stock', compute="compute_gls_stock_id", store=True)
-    partner_id = fields.Many2one('res.partner', related='stock_move_line_id.move_id.picking_id.partner_id', string='Tedarikçi')
+    # partner_id = fields.Many2one('res.partner', related='stock_move_line_id.move_id.picking_id.partner_id', string='Tedarikçi')
+    partner_id = fields.Many2one('res.partner', compute="compute_partner_id", string='Tedarikçi',store=True)
     product_id = fields.Many2one('product.product', related='stock_move_line_id.move_id.product_id', string='Ürün')
     product_qty = fields.Float(related='stock_move_line_id.move_id.product_uom_qty', string='Adet')
     line_ids = fields.One2many('weight.measurement.line', 'weight_measurement_id')
@@ -49,8 +50,20 @@ class WeightMeasurement(models.Model):
     @api.depends('stock_move_line_id')
     def compute_gls_stock_id(self):
         for rec in self:
-            rec.gls_stock_id = self.env['gls.stock'].search(
-                [('stock_move_id', '=', rec.stock_move_line_id.move_id.id), ('analysis_id.pallet_weight', '=', True)], limit=1).id
+            if rec.stock_move_line_id:
+                rec.gls_stock_id = self.env['gls.stock'].search(
+                    [('stock_move_id', '=', rec.stock_move_line_id.move_id.id), ('analysis_id.pallet_weight', '=', True)], limit=1).id
+            else:
+                rec.partner_id = False
+            
+    @api.depends('stock_move_line_id')
+    def compute_partner_id(self):
+        for rec in self:
+            if rec.stock_move_line_id:
+                rec.partner_id = self.env['stock.picking'].search(
+                    [('origin', '=', rec.stock_move_line_id.move_id.origin), ('partner_id', '!=', False)], limit=1).partner_id.id
+            else:
+                rec.partner_id = False
 
 
 class WeightMeasurementLine(models.Model):
