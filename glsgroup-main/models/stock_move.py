@@ -10,7 +10,7 @@ class StockMoveLine(models.Model):
         res = []
         for move in self:
             name = move.product_id.display_name
-            if move.lot_name:
+            if move.lot_id:
                 name = '%s / %s' % (move.lot_id.name, name)
             res.append((move.id, name))
         return res
