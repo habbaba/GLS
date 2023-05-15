@@ -14,7 +14,7 @@ class WeightMeasurement(models.Model):
                                 join stock_picking_type spt on spt.id = sp.picking_type_id
                                 where sml.lot_id is not NULL
                                 and sml.location_dest_id=10
-                                and spt.id=1
+                                and spt.id=24
                                 """)  
         result = self.env.cr.fetchall()
         print("result:", result)
