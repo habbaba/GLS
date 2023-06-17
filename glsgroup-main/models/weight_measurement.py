@@ -28,7 +28,7 @@ class WeightMeasurement(models.Model):
             ('id', 'in', moves.ids),
         ]
 
-    gls_stock_id = fields.Many2one('gls.stock', compute="compute_gls_stock_id", store=True)
+    gls_stock_id = fields.Many2one('gls.stock', compute="compute_gls_stock_id")
     partner_id = fields.Many2one('res.partner', compute="compute_partner_id", string='Tedarikçi',store=True)
     product_id = fields.Many2one('product.product', related='stock_move_line_id.move_id.product_id', string='Ürün')
     product_qty = fields.Float(related='stock_move_line_id.move_id.product_uom_qty', string='Adet')
