@@ -1,5 +1,8 @@
 from odoo import fields, models, api
 
+STOCK_LOCATION_ID = 10
+STOCK_PICKING_TYPE_ID = 24
+
 
 class WeightMeasurement(models.Model):
     _name = 'weight.measurement'
@@ -13,18 +16,19 @@ class WeightMeasurement(models.Model):
                                 join stock_picking sp on sp.id = sml.picking_id
                                 join stock_picking_type spt on spt.id = sp.picking_type_id
                                 where sml.lot_id is not NULL
-                                and sml.location_dest_id=10
-                                and spt.id=24
-                                """)  
+                                and sml.location_dest_id=%(STOCK_LOCATION_ID)s
+                                and spt.id=%(STOCK_PICKING_TYPE_ID)s
+                                """,{
+            'STOCK_LOCATION_ID': STOCK_LOCATION_ID,
+            'STOCK_PICKING_TYPE_ID': STOCK_PICKING_TYPE_ID,
+        } )  
         result = self.env.cr.fetchall()
-        print("result:", result)
         moves = self.env['stock.move.line'].browse([tup[0] for tup in result])
         return [
             ('id', 'in', moves.ids),
         ]
 
     gls_stock_id = fields.Many2one('gls.stock', compute="compute_gls_stock_id", store=True)
-    # partner_id = fields.Many2one('res.partner', related='stock_move_line_id.move_id.picking_id.partner_id', string='Tedarikçi')
     partner_id = fields.Many2one('res.partner', compute="compute_partner_id", string='Tedarikçi',store=True)
     product_id = fields.Many2one('product.product', related='stock_move_line_id.move_id.product_id', string='Ürün')
     product_qty = fields.Float(related='stock_move_line_id.move_id.product_uom_qty', string='Adet')
@@ -54,7 +58,7 @@ class WeightMeasurement(models.Model):
                 rec.gls_stock_id = self.env['gls.stock'].search(
                     [('stock_move_id', '=', rec.stock_move_line_id.move_id.id), ('analysis_id.pallet_weight', '=', True)], limit=1).id
             else:
-                rec.partner_id = False
+                rec.gls_stock_id = False
             
     @api.depends('stock_move_line_id')
     def compute_partner_id(self):

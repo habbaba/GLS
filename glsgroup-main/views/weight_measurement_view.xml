@@ -36,7 +36,7 @@
                     <notebook>
                         <page name="pallet_weight" string="Palet Ağırlıkları">
                             <field name="line_ids">
-                                <tree string="" create="false" editable="bottom">
+                                <tree string="" create="false" editable="bottom" delete="false">
                                     <field name="name" />
                                     <field name="value" />
                                 </tree>

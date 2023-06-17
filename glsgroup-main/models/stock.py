@@ -7,11 +7,11 @@ class Stock(models.Model):
     _rec_name = "name"
 
     name = fields.Char(compute = "_get_name")
-    ref_number = fields.Char(related='stock_move_id.picking_id.name',string='Referans')
+    ref_number = fields.Char(related='stock_move_id.picking_id.name',string='Referans', store=True)
     location_dest_id = fields.Many2one('stock.location', related='stock_move_id.location_dest_id', string='Location')
     partner_id = fields.Many2one('res.partner',compute='_compute_partner_id', string='Tedarikçi')
     product_id = fields.Many2one('product.product', related='stock_move_id.product_id', string='Ürün')
-    source_document = fields.Char(related='stock_move_id.picking_id.origin', string='Kaynak Belge')
+    source_document = fields.Char(related='stock_move_id.picking_id.origin', string='Kaynak Belge', store=True)
     state = fields.Selection(
         [('waiting', 'Bekliyor'), ('taken', 'Numune Alındı'), ('skipped', 'Analiz Yapılmadı'), ('done', 'Analiz Yapıldı')])
     accept_date = fields.Date("Numune Kabul Tarihi", readonly=True)
@@ -19,7 +19,7 @@ class Stock(models.Model):
     analysis_id = fields.Many2one('gls.analysis', 'Analiz',)
     analysis_result_id = fields.Many2one('analysis.result')
     lot_id = fields.Many2one('stock.production.lot', compute="_compute_lot_id")
-    lot_number = fields.Char(string='Lot Numarası',related='lot_id.name')
+    lot_number = fields.Char(string='Lot Numarası',related='lot_id.name', store=True)
 
 
 
