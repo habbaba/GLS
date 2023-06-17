@@ -6,6 +6,7 @@
         <field name="model">weight.measurement</field>
         <field name="arch" type="xml">
             <tree string="">
+                <field name="name" />
                 <field name="stock_move_line_id" />
                 <field name="partner_id" />
                 <field name="product_id" />
@@ -22,7 +23,6 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="gls_stock_id" invisible="1"/>
                             <field name="stock_move_line_id" context="{'weight_measurement':True}" options="{'no_create': True}" />
                             <field name="partner_id" />
                             <field name="product_id" />
@@ -30,7 +30,7 @@
                         </group>
                         <group>
                             <button string="Palet Satırları Oluştur" name="action_create_pallet_lines" type="object" class="oe_highlight" attrs="{'invisible': [('line_ids', '!=', [])]}"/>
-                            
+
                         </group>
                     </group>
                     <notebook>
@@ -60,6 +60,15 @@
                Henüz bir kayıt bulunmamaktadır.
             </p>
         </field>
+    </record>
+
+
+    <record id="seq_hospital_patient" model="ir.sequence">
+        <field name="name">PA Referans</field>
+        <field name="code">weight.measurement</field>
+        <field name="prefix">PA</field>
+        <field name="padding">7</field>
+        <field name="company_id" eval="False"/>
     </record>
 
 </odoo>

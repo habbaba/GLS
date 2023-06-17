@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 
 STOCK_LOCATION_ID = 10
 STOCK_PICKING_TYPE_ID = 24
@@ -6,7 +6,6 @@ STOCK_PICKING_TYPE_ID = 24
 
 class WeightMeasurement(models.Model):
     _name = 'weight.measurement'
-    _rec_name = "gls_stock_id"
 
 
     @api.model
@@ -28,7 +27,8 @@ class WeightMeasurement(models.Model):
             ('id', 'in', moves.ids),
         ]
 
-    gls_stock_id = fields.Many2one('gls.stock', compute="compute_gls_stock_id")
+    name = fields.Char(string='Referans No', required=True,
+                          readonly=True, default=lambda self: _('New'))
     partner_id = fields.Many2one('res.partner', compute="compute_partner_id", string='Tedarikçi',store=True)
     product_id = fields.Many2one('product.product', related='stock_move_line_id.move_id.product_id', string='Ürün')
     product_qty = fields.Float(related='stock_move_line_id.move_id.product_uom_qty', string='Adet')
@@ -37,6 +37,7 @@ class WeightMeasurement(models.Model):
     net_weight = fields.Float()
     stock_move_line_id = fields.Many2one('stock.move.line', "Lot Numarası",
                                          domain=lambda self: self._get_move_line_domain())
+    stock_move_id = fields.Many2one('stock.move', related='stock_move_line_id.move_id', store=True)
 
     def action_create_pallet_lines(self):
         self.ensure_one()
@@ -51,14 +52,7 @@ class WeightMeasurement(models.Model):
                 rec.gross_weight = sum(rec.line_ids.mapped('value'))
                 rec.net_weight = rec.gross_weight - 30
 
-    @api.depends('stock_move_line_id')
-    def compute_gls_stock_id(self):
-        for rec in self:
-            if rec.stock_move_line_id:
-                rec.gls_stock_id = self.env['gls.stock'].search(
-                    [('stock_move_id', '=', rec.stock_move_line_id.move_id.id), ('analysis_id.pallet_weight', '=', True)], limit=1).id
-            else:
-                rec.gls_stock_id = False
+
             
     @api.depends('stock_move_line_id')
     def compute_partner_id(self):
@@ -68,6 +62,16 @@ class WeightMeasurement(models.Model):
                     [('origin', '=', rec.stock_move_line_id.move_id.origin), ('partner_id', '!=', False)], limit=1).partner_id.id
             else:
                 rec.partner_id = False
+
+
+    
+    @api.model
+    def create(self, vals):
+        if vals.get('name', _('New')) == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'weight.measurement') or _('New')
+        res = super(WeightMeasurement, self).create(vals)
+        return res
 
 
 class WeightMeasurementLine(models.Model):

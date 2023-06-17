@@ -29,8 +29,8 @@ class AnalysisConfTable(models.Model):
         if pallet_weight:
             gross_weight_line_id = self.env['gls.analysis.line'].search([('analysis_id', '=', analysis_id), ('feature', 'ilike', '%brüt%')])
             net_weight_line_id = self.env['gls.analysis.line'].search([('analysis_id', '=', analysis_id), ('feature', 'ilike', '%net%')])
-            gls_stock_id = self.env.context.get('gls_stock_id')
-            weight_measurement_id = self.env['weight.measurement'].search([('gls_stock_id', '=', gls_stock_id)], limit=1)
+            stock_move_id = self.env.context.get('stock_move_id')
+            weight_measurement_id = self.env['weight.measurement'].search([('stock_move_id', '=', stock_move_id)], limit=1)
             if weight_measurement_id:
                 for item in res['result_ids']:
                     if item[2]['analysis_line_id'] == gross_weight_line_id.id:
