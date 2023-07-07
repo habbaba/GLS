@@ -1,7 +1,7 @@
 from odoo import fields, models, api, _
 
-STOCK_LOCATION_ID = 10
-STOCK_PICKING_TYPE_ID = 24
+STOCK_LOCATION_ID = 10   #10 #36
+STOCK_PICKING_TYPE_ID = 24 #24 #5
 
 
 class WeightMeasurement(models.Model):
@@ -49,7 +49,7 @@ class WeightMeasurement(models.Model):
     def _constraint_line_ids(self):
         for rec in self:
             if rec.line_ids:
-                rec.gross_weight = sum(rec.line_ids.mapped('value'))
+                rec.gross_weight = sum(rec.line_ids.mapped('value'))/len(rec.line_ids)
                 rec.net_weight = rec.gross_weight - 30
 
 
