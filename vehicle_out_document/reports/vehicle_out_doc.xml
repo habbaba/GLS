@@ -1,0 +1,86 @@
+<odoo>
+    <data>
+        <template id="vehicle_out_document.vehicle_out_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-set="lang" t-value="doc.partner_id.lang or doc.company_id.partner_id.lang"/>
+                        <div class="page" style="padding-top:0px;">
+                            <div class="row">
+                                <div class="col-6" style="text-align:left">
+                                    
+                                    </div>
+                                <div class="col-6" style="text-align:right">
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                                    </div>
+                            </div>
+                            <h3 style="margin-top:20px; margin-bottom:50px; width:100%; text-align:center; font-size:55px"><strong>ARAÇ ÇIKIŞ BELGESİ</strong></h3>
+                            <p class="mt-5 mb-3 h4">Bu belgeyi çıkış yaparken güvenliğe teslim ediniz. </p>
+                            <table class="table table-borderless mt-4">
+                                <thead>
+                                    <tr>
+                                        <th class="text-start py-1" style="width:200px">
+                                            SÜRÜCÜ
+                                        </th>
+                                        <th  style="width:10px">:</th>
+                                        <th class="text-start py-1">
+                                            <t t-set="drivers" t-value="doc.driver_ids.mapped('name')"/>
+                                            <t t-esc="(',  ').join(drivers)"/>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-start py-1" style="width:200px">
+                                            ARAÇ PLAKASI
+                                        </th>
+                                        <th  style="width:10px">:</th>
+                                        <th class="text-start py-1">
+                                            <t t-esc="doc.vehicle_id"/>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-start py-1" style="width:200px">
+                                            DORSA PLAKASI
+                                        </th>
+                                        <th  style="width:10px">:</th>
+                                        <th class="text-start py-1">
+                                            <t t-esc="doc.transport_equipment_id"/>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-start py-1" style="width:200px">
+                                            DÜZENLENME TARİHİ
+                                        </th>
+                                        <th  style="width:10px">:</th>
+                                        <th class="text-start py-1">
+                                            <span t-esc="context_timestamp(doc.scheduled_date).strftime('%d-%m-%Y %H:%M')"/>
+                                        </th>
+                                    </tr>                           
+                                </thead>                            
+                            </table>
+                            <div class="row mt-5">
+                                <t t-set="user" t-value="request.env.user.name"/>
+                                <div class="col-8" style="text-align:left"/>
+                                <div class="col-4" style="text-align:right">
+                                    <strong>Düzenleyen</strong><br/>
+                                    <span class="h5" t-raw="user"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_report_vehicle_out_document" model="ir.actions.report">
+            <field name="name">Araç Çıkış Belgesi</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">vehicle_out_document.vehicle_out_report</field>
+            <field name="report_file">vehicle_out_document.vehicle_out_report</field>
+            <field name="print_report_name">'Araç Çıkış Belgesi'</field>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_euro"/>
+        </record>
+    </data>
+</odoo>
